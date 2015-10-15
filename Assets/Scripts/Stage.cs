@@ -31,11 +31,12 @@ public class Stage : MonoBehaviour {
 			}
 		}
 		Debug.Log(rectSize);
+
 		// Instantiate first block and set position.
 		GameObject firstBlock = Instantiate (block) as GameObject;
 		firstBlock.transform.parent = gameObject.transform;
-		firstBlock.transform.localPosition = coordToPos(0,0);
-
+		firstBlock.transform.localPosition = coordToPos(3,3);
+		firstBlock.transform.localScale = new Vector2(cellSize, cellSize);
 
 
 	}
