@@ -9,7 +9,10 @@ public class Stage : MonoBehaviour {
 	public int gridSize;
 	public float cellSize;
 	public float blockSpeed = 0.5f;
+	public float blockSpawnTime = 1.0f;
+	public Color[] colors = new Color[4];
 
+	private float timer = 0;
 	private float rectSize;
 	private GameObject[,] grid;
 
@@ -30,14 +33,14 @@ public class Stage : MonoBehaviour {
 				grid[i,j] = d;
 			}
 		}
-
-		for (int i = 0; i < 5; i++) {
-			SpawnBlock ();
-		}
 	}
 
 	void Update () {
-	
+		timer -= Time.deltaTime;
+		if (timer < 0) {
+			timer += blockSpawnTime;
+			SpawnBlock ();
+		}
 	}
 
 	public void SpawnBlock() {
@@ -62,12 +65,13 @@ public class Stage : MonoBehaviour {
 				dir = Block.Direction.Left;
 			}
 		}
-		AddBlock (x, y, dir);
+		AddBlock (x, y, dir, colors[Random.Range (0, 3)]);
 	}
 
-	public void AddBlock(int x, int y, Block.Direction dir){
+	public void AddBlock(int x, int y, Block.Direction dir, Color col){
 		Block newBlock = Instantiate (block);
 		newBlock.SetDirection(dir);
+		newBlock.SetColor (col);
 		newBlock.transform.parent = transform;
 		newBlock.transform.localPosition = CoordToPos (x, y);
 		newBlock.transform.localScale = new Vector2 (cellSize, cellSize);

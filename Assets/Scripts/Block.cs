@@ -12,6 +12,10 @@ public class Block : MonoBehaviour {
 	
 	}
 
+	public void SetColor(Color col) {
+		GetComponent<SpriteRenderer> ().color = col;
+	}
+
 	public void SetDirection(Direction dir) {
 		Rigidbody2D rb = GetComponent<Rigidbody2D> ();
 		direction = dir;
