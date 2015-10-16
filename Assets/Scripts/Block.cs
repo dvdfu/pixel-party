@@ -37,13 +37,13 @@ public class Block : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		// combine them.
+		/* combine them.
 		Debug.Log("weeeeeeeeeeeeee");
 		GameObject otherBlock = other.gameObject;
 		//Block currentBlock = gameObject.GetComponent<Block>();
 
 		otherBlock.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		clusterScript.allBlocks.Add(otherBlock.GetComponent<Block>());
-
+		*/
 	}
 }

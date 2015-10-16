@@ -27,7 +27,7 @@ public class InputManager : MonoBehaviour {
 			float cs = stageScript.cellSize;
 			int dragX = (int) (mouseDragged.x / cs);
 			int dragY = (int) (mouseDragged.y / cs);
-			clusterScript.MoveBlocks(clusterAnchor + new Vector3(dragX, dragY, 0)*cs);
+			cluster.transform.position = clusterAnchor + new Vector3(dragX, dragY, 0)*cs;
 		}
 	}
 }
