@@ -126,6 +126,4 @@ public class Stage : MonoBehaviour {
 		y = (y + rectSize / 2) / cellSize;
 		return new Vector2 ((int) x, (int) y);
 	}
-
-
 }

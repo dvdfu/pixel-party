@@ -2,22 +2,14 @@
 using System.Collections;
 
 public class blockManager : MonoBehaviour {
-	Stage stageScript ;
-	float cellSize ;
-	// Use this for initialization
+	private Stage stageScript;
+	private float cellSize;
+
 	void Start () {
-
-		stageScript = gameObject.transform.parent.gameObject.GetComponent<Stage>();
+		stageScript = transform.parent.gameObject.GetComponent<Stage>();
 		cellSize = stageScript.cellSize;
-
-		// instantiate it 
-	
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
 	}
-
-
 }
