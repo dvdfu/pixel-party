@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Stage : MonoBehaviour {
 	public GameObject dot;
 	public GameObject dots;
-	public GameObject block;
+	public Block block;
 	public int gridSize;
 	public float cellSize;
 	public float blockSpeed = 0.5f;
@@ -30,9 +30,10 @@ public class Stage : MonoBehaviour {
 				grid[i,j] = d;
 			}
 		}
-		SpawnBlock ();
-		SpawnBlock ();
-		SpawnBlock ();
+
+		for (int i = 0; i < 5; i++) {
+			SpawnBlock ();
+		}
 	}
 
 	void Update () {
@@ -41,18 +42,32 @@ public class Stage : MonoBehaviour {
 
 	public void SpawnBlock() {
 		int x, y;
+		Block.Direction dir;
 		if (Random.value > 0.5f) { // vertical trajectory
-			x = Random.Range(-1, gridSize);
-			y = Random.value > 0.5f ? -1 : gridSize;
+			x = Random.Range(0, gridSize-1);
+			if (Random.value > 0.5f) {
+				y = -1;
+				dir = Block.Direction.Up;
+			} else {
+				y = gridSize;
+				dir = Block.Direction.Down;
+			}
 		} else { // horizontal trajectory
-			x = Random.value > 0.5f ? -1 : gridSize;
-			y = Random.Range(-1, gridSize);
+			y = Random.Range(0, gridSize-1);
+			if (Random.value > 0.5f) {
+				x = -1;
+				dir = Block.Direction.Right;
+			} else {
+				x = gridSize;
+				dir = Block.Direction.Left;
+			}
 		}
-		AddBlock (x, y);
+		AddBlock (x, y, dir);
 	}
 
-	public void AddBlock(int x, int y){
-		GameObject newBlock = Instantiate (block) as GameObject;
+	public void AddBlock(int x, int y, Block.Direction dir){
+		Block newBlock = Instantiate (block);
+		newBlock.SetDirection(dir);
 		newBlock.transform.parent = transform;
 		newBlock.transform.localPosition = CoordToPos (x, y);
 		newBlock.transform.localScale = new Vector2 (cellSize, cellSize);
