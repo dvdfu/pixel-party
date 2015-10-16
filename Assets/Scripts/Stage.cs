@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Stage : MonoBehaviour {
+	public Score score;
 	public GameObject dot;
 	public GameObject dots;
 	public Block block;
@@ -103,6 +104,7 @@ public class Stage : MonoBehaviour {
 	}
 
 	public Block AddBlock(int x, int y, Block.Direction dir, Color col){
+		score.Deduct ();
 		Block newBlock = Instantiate (block);
 		newBlock.SetDirection(dir);
 		newBlock.SetColor (col);
