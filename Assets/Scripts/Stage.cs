@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
- 
-
 public class Stage : MonoBehaviour {
 	public GameObject dot;
 	public GameObject dots;
 	public Block block;
+	public Block cluster;
 	public int gridSize;
 	public float cellSize;
 	public float blockSpeed = 0.5f;
@@ -17,15 +16,9 @@ public class Stage : MonoBehaviour {
 	private float timer = 0;
 	private float rectSize;
 	private GameObject[,] grid;
-	
-	public Block cluster;
 
 	void Start () {
-
-
 		grid = new GameObject[gridSize + 1, gridSize + 1];
-
-
 		rectSize = gameObject.GetComponent<RectTransform> ().sizeDelta.x;
 		cellSize = rectSize / gridSize;
 
@@ -41,16 +34,12 @@ public class Stage : MonoBehaviour {
 			}
 		}
 
-		Debug.Log(rectSize);
-
 		// Instantiate first block and set position.
 		cluster = Instantiate (block);
 		cluster.transform.parent = gameObject.transform;
 		cluster.transform.localPosition = CoordToPos(3,3);
 		cluster.transform.localScale = new Vector2(cellSize, cellSize);
-
 	}
-
 
 	void Update () {
 		timer -= Time.deltaTime;
@@ -85,14 +74,14 @@ public class Stage : MonoBehaviour {
 		AddBlock (x, y, dir, colors[Random.Range (0, 3)]);
 	}
 
-
-	public void AddBlock(int x, int y, Block.Direction dir, Color col){
+	public Block AddBlock(int x, int y, Block.Direction dir, Color col){
 		Block newBlock = Instantiate (block);
 		newBlock.SetDirection(dir);
 		newBlock.SetColor (col);
 		newBlock.transform.parent = transform;
 		newBlock.transform.localPosition = CoordToPos (x, y);
 		newBlock.transform.localScale = new Vector3 (cellSize, cellSize, 1);
+		return newBlock;
 	}
 
 	public Vector2 CoordToPos(int x, int y){
@@ -100,5 +89,13 @@ public class Stage : MonoBehaviour {
 		pos.x += cellSize / 2;
 		pos.y += cellSize / 2;
 		return pos;
+	}
+
+	public Vector2 PosToCoord(Vector3 pos){
+		float x = pos.x - cellSize / 2;
+		float y = pos.y - cellSize / 2;
+		x = (x + rectSize / 2) / cellSize;
+		y = (y + rectSize / 2) / cellSize;
+		return new Vector2 ((int) x, (int) y);
 	}
 }
