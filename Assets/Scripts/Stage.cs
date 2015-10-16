@@ -6,11 +6,11 @@ public class Stage : MonoBehaviour {
 	public GameObject dot;
 	public GameObject dots;
 	public Block block;
-	public Block cluster;
+	//public Block cluster;
 	public int gridSize;
 	public float cellSize;
 	public float blockSpeed = 0.5f;
-	public float blockSpawnTime = 5.0f;
+	public float blockSpawnTime = 10.0f;
 	public Color[] colors = new Color[4];
 
 	private float timer = 0;
@@ -18,6 +18,9 @@ public class Stage : MonoBehaviour {
 	private GameObject[,] grid;
 	private List<Block> blocks;
 	private List<Block> deadBlocks;
+
+	private Cluster cluster;
+
 
 	void Start () {
 		grid = new GameObject[gridSize + 1, gridSize + 1];
@@ -38,11 +41,10 @@ public class Stage : MonoBehaviour {
 			}
 		}
 
-		// Instantiate first block and set position.
-		cluster = Instantiate (block);
-		cluster.transform.parent = gameObject.transform;
-		cluster.transform.localPosition = CoordToPos(3,3);
-		cluster.transform.localScale = new Vector3(cellSize, cellSize, 1);
+		
+		cluster = gameObject.GetComponent<Cluster>();
+		cluster.initializeBlock();
+
   }
 
 	void Update () {

@@ -7,10 +7,12 @@ public class InputManager : MonoBehaviour {
 	private Vector3 clusterAnchor;
 	private Stage stageScript;
 	private Block cluster;
+	private Cluster clusterScript;
 
 	void Start () {
+		clusterScript = gameObject.GetComponent<Cluster>();
 		stageScript = gameObject.GetComponent<Stage> ();
-		cluster = stageScript.cluster;
+		cluster = clusterScript.firstBlock;
 		mouseDragged = Vector3.zero;
 		mousePressed = Vector3.zero;
 	}
@@ -25,7 +27,7 @@ public class InputManager : MonoBehaviour {
 			float cs = stageScript.cellSize;
 			int dragX = (int) (mouseDragged.x / cs);
 			int dragY = (int) (mouseDragged.y / cs);
-			cluster.transform.position = clusterAnchor + new Vector3(dragX, dragY, 0)*cs;
+			clusterScript.MoveBlocks(clusterAnchor + new Vector3(dragX, dragY, 0)*cs);
 		}
 	}
 }
