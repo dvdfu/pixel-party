@@ -74,7 +74,7 @@ public class Stage : MonoBehaviour {
 		newBlock.SetColor (col);
 		newBlock.transform.parent = transform;
 		newBlock.transform.localPosition = CoordToPos (x, y);
-		newBlock.transform.localScale = new Vector2 (cellSize, cellSize);
+		newBlock.transform.localScale = new Vector3 (cellSize, cellSize, 1);
 	}
 
 	public Vector2 CoordToPos(int x, int y){
