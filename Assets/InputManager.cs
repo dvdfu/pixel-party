@@ -35,9 +35,9 @@ public class InputManager : MonoBehaviour {
 			Vector3 currentPos = stageScript.cluster.transform.localPosition;
 			
 			if(Mathf.Abs(xMovement) > stageScript.cellSize){
-				Debug.LogError("Movement : " + xMovement.ToString() + " Cellsize : " + stageScript.cellSize.ToString());
-				float leftBoundary = stageScript.coordToPos(0,0).x;
-				float rightBoundary = stageScript.coordToPos(stageScript.gridSize,0).x;
+
+				float leftBoundary = stageScript.CoordToPos(0,0).x;
+				float rightBoundary = stageScript.CoordToPos(stageScript.gridSize,0).x;
 				
 				if(xMovement < 0){
 					if(currentPos.x - stageScript.cellSize >= leftBoundary){
@@ -55,9 +55,9 @@ public class InputManager : MonoBehaviour {
 			}
 			
 			if(Mathf.Abs(yMovement) > stageScript.cellSize){
-				
-				float topBoundary = stageScript.coordToPos(0,stageScript.gridSize).y;
-				float bottomBoundary = stageScript.coordToPos(0,0).y;
+
+				float topBoundary = stageScript.CoordToPos(0,stageScript.gridSize).y;
+				float bottomBoundary = stageScript.CoordToPos(0,0).y;
 				
 				if(yMovement < 0){
 					if( currentPos.y - stageScript.cellSize >= bottomBoundary){
