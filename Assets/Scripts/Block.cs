@@ -34,4 +34,11 @@ public class Block : MonoBehaviour {
 			break;
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D other) {
+		// Stick them.
+		HingeJoint2D myJoint = (HingeJoint2D)gameObject.AddComponent<HingeJoint2D>();
+		myJoint.connectedBody = other.rigidbody;
+	}
+	
 }

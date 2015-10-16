@@ -10,7 +10,7 @@ public class Stage : MonoBehaviour {
 	public int gridSize;
 	public float cellSize;
 	public float blockSpeed = 0.5f;
-	public float blockSpawnTime = 1.0f;
+	public float blockSpawnTime = 5.0f;
 	public Color[] colors = new Color[4];
 
 	private float timer = 0;
@@ -98,4 +98,6 @@ public class Stage : MonoBehaviour {
 		y = (y + rectSize / 2) / cellSize;
 		return new Vector2 ((int) x, (int) y);
 	}
+
+
 }
