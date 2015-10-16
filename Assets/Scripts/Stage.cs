@@ -47,7 +47,7 @@ public class Stage : MonoBehaviour {
 		cluster = Instantiate (block);
 		cluster.transform.parent = gameObject.transform;
 		cluster.transform.localPosition = CoordToPos(3,3);
-		cluster.transform.localScale = new Vector2(cellSize, cellSize);
+		cluster.transform.localScale = new Vector3(cellSize, cellSize, 1);
 
 	}
 
