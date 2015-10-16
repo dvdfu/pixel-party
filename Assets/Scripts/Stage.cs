@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 public class Stage : MonoBehaviour {
 	public GameObject dot;
+	public GameObject dots;
 	public GameObject block;
 	public int gridSize;
 	public float cellSize;
-	private float rectSize;
 
+	private float rectSize;
 	private GameObject[,] grid;
 
 	void Start () {
@@ -24,7 +25,7 @@ public class Stage : MonoBehaviour {
 			for (int j = 0; j <= gridSize; j++) {
 				pos = new Vector3(i*cellSize-rectSize/2, j*cellSize-rectSize/2, 0);
 				d = Instantiate (dot) as GameObject;
-				d.transform.parent = gameObject.transform;
+				d.transform.parent = dots.transform;
 				d.transform.localPosition = pos;
 
 				grid[i,j] = d;
