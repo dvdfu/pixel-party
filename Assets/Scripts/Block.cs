@@ -9,7 +9,6 @@ public class Block : MonoBehaviour {
 	}
 	
 	void Update () {
-	
 	}
 
 	public void SetColor(Color col) {
@@ -21,16 +20,16 @@ public class Block : MonoBehaviour {
 		direction = dir;
 		switch (dir) {
 		case Direction.Up:
-			rb.velocity = new Vector2(0, 1);
+			rb.velocity = new Vector2(0, 2);
 			break;
 		case Direction.Down:
-			rb.velocity = new Vector2(0, -1);
+			rb.velocity = new Vector2(0, -2);
 			break;
 		case Direction.Left:
-			rb.velocity = new Vector2(-1, 0);
+			rb.velocity = new Vector2(-2, 0);
 			break;
 		case Direction.Right:
-			rb.velocity = new Vector2(1, 0);
+			rb.velocity = new Vector2(2, 0);
 			break;
 		}
 	}

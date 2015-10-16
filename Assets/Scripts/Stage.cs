@@ -16,9 +16,13 @@ public class Stage : MonoBehaviour {
 	private float timer = 0;
 	private float rectSize;
 	private GameObject[,] grid;
+	private List<Block> blocks;
+	private List<Block> deadBlocks;
 
 	void Start () {
 		grid = new GameObject[gridSize + 1, gridSize + 1];
+		blocks = new List<Block> ();
+		deadBlocks = new List<Block> ();
 		rectSize = gameObject.GetComponent<RectTransform> ().sizeDelta.x;
 		cellSize = rectSize / gridSize;
 
@@ -39,7 +43,7 @@ public class Stage : MonoBehaviour {
 		cluster.transform.parent = gameObject.transform;
 		cluster.transform.localPosition = CoordToPos(3,3);
 		cluster.transform.localScale = new Vector3(cellSize, cellSize, 1);
-	}
+  }
 
 	void Update () {
 		timer -= Time.deltaTime;
@@ -47,6 +51,30 @@ public class Stage : MonoBehaviour {
 			timer += blockSpawnTime;
 			SpawnBlock ();
 		}
+
+		foreach (Block b in blocks) {
+			Vector2 coords = PosToCoord(b.transform.localPosition);
+			switch (b.direction) {
+				case Block.Direction.Up:
+				if (coords.y > gridSize) deadBlocks.Add (b);
+				break;
+				case Block.Direction.Down:
+				if (coords.y < -1) deadBlocks.Add (b);
+				break;
+				case Block.Direction.Left:
+				if (coords.x < -1) deadBlocks.Add (b);
+				break;
+				case Block.Direction.Right:
+				if (coords.x > gridSize) deadBlocks.Add (b);
+				break;
+			}
+		}
+
+		foreach (Block b in deadBlocks) {
+			blocks.Remove(b);
+			Destroy(b.gameObject);
+		}
+		deadBlocks.Clear();
 	}
 
 	public void SpawnBlock() {
@@ -71,7 +99,7 @@ public class Stage : MonoBehaviour {
 				dir = Block.Direction.Left;
 			}
 		}
-		AddBlock (x, y, dir, colors[Random.Range (0, 3)]);
+		blocks.Add (AddBlock (x, y, dir, colors[Random.Range (0, 4)]));
 	}
 
 	public Block AddBlock(int x, int y, Block.Direction dir, Color col){
