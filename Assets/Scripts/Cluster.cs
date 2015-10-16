@@ -40,29 +40,31 @@ public class Cluster : MonoBehaviour {
 
 	}
 
-	public void checkCollission(Block b){
-		/*
+	public List<Block> CheckCollision(List<Block> blocks){
 		List<Block> newBlocks = new List<Block>();
-		foreach(Block clusterBlock in allBlocks){
-			// If collide from top.
-			Vector3 position = b.gameObject.transform.parent.position;
-			if(b.direction == Block.Direction.Down){
-				Debug.Log(stageScript.cellSize);
-				//Debug.Log("Block : position);
-				//Debug.Log
-				Debug.Log(position.y - clusterBlock.gameObject.transform.position.y);
+		foreach(Block b in blocks){
+			foreach(Block clusterBlock in allBlocks){
+				// If collide from top.
+				Vector3 position = b.gameObject.transform.position;
+				
+				if(b.direction == Block.Direction.Down && (Mathf.Abs(position.y - clusterBlock.gameObject.transform.position.y) <= stageScript.cellSize)){
+					Debug.Log("YAAAAAAY");
+					b.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+					newBlocks.Add(b);
+       			 }
+        
+       				 // If collide from bottom.
 			}
-			if(b.direction == Block.Direction.Down && (position.y - clusterBlock.gameObject.transform.position.y - 1 <= stageScript.cellSize)){
-				Debug.Log("YAAAAAAY");
-				b.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-				//newBlocks.Add(b);
-			}
-
-			// If collide from bottom.
+		
 		}
 
-		//allBlocks.AddRange(newBlocks);
-		*/
+
+		foreach(Block block in newBlocks){
+			allBlocks.Add(block);
+		}
+
+		return newBlocks;
+
 	}
 
 	public void MoveBlocks(Vector3 newPosition){

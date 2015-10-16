@@ -11,7 +11,7 @@ public class Stage : MonoBehaviour {
 	public int gridSize;
 	public float cellSize;
 	public float blockSpeed = 0.5f;
-	public float blockSpawnTime = 50.0f;
+	public float blockSpawnTime = 500.0f;
 	public Color[] colors = new Color[4];
 
 	private float timer = 0;
@@ -79,8 +79,9 @@ public class Stage : MonoBehaviour {
 		}
 		deadBlocks.Clear();
 
-		foreach(Block b in blocks){
-			cluster.checkCollission(b);
+		List<Block> l = cluster.CheckCollision(blocks);
+		foreach(Block b in l){
+			blocks.Remove(b);
 		}
 	}
 
