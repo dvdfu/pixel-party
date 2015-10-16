@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+ 
+
 public class Stage : MonoBehaviour {
 	public GameObject dot;
 	public GameObject dots;
@@ -11,10 +13,12 @@ public class Stage : MonoBehaviour {
 
 	private float rectSize;
 	private GameObject[,] grid;
+	
+	public GameObject cluster;
 
 	void Start () {
-		grid = new GameObject[gridSize + 1, gridSize + 1];
 
+		grid = new GameObject[gridSize + 1, gridSize + 1];
 
 		rectSize = gameObject.GetComponent<RectTransform> ().sizeDelta.x;
 		cellSize = rectSize / gridSize;
@@ -34,16 +38,16 @@ public class Stage : MonoBehaviour {
 		Debug.Log(rectSize);
 
 		// Instantiate first block and set position.
-		GameObject firstBlock = Instantiate (block) as GameObject;
-		firstBlock.transform.parent = gameObject.transform;
-		firstBlock.transform.localPosition = coordToPos(3,3);
-		firstBlock.transform.localScale = new Vector2(cellSize, cellSize);
+		cluster = Instantiate (block) as GameObject;
+		cluster.transform.parent = gameObject.transform;
+		cluster.transform.localPosition = coordToPos(3,3);
+		cluster.transform.localScale = new Vector2(cellSize, cellSize);
 
 
 	}
 
 	void Update () {
-	
+
 	}
 
 	public Vector2 coordToPos(int x, int y){
