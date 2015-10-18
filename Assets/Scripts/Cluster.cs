@@ -11,12 +11,6 @@ public class Cluster : MonoBehaviour {
 
 	void Start () {
 		stageScript = gameObject.GetComponent<Stage> ();
-		if(allBlocks == null){
-			//allBlocks = new List<Block>();
-		}
-
-		//Debug.Log("weeeeeeeee");
-
 	}
 
 	public void initializeBlock(Stage script){
@@ -49,9 +43,10 @@ public class Cluster : MonoBehaviour {
 				
 				if((Mathf.Abs(position.y - clusterBlock.gameObject.transform.position.y) < stageScript.cellSize) &&
 				   (Mathf.Abs(position.x - clusterBlock.gameObject.transform.position.x) < stageScript.cellSize)){
-					Debug.Log("YAAAAAAY");
 					b.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-					b.anchor = b.transform.position;
+					//b.anchor = stageScript.PosToCoord (b.transform.position);
+					Vector2 coord = stageScript.PosToCoord(b.transform.localPosition);
+					b.anchor = stageScript.CoordToPos((int)coord.x, (int)coord.y);
 					newBlocks.Add(b);
        			 }
         
@@ -62,7 +57,7 @@ public class Cluster : MonoBehaviour {
 
 
 		foreach(Block block in newBlocks){
-			block.anchor = block.transform.position;
+			//block.anchor = block.transform.position;
 			allBlocks.Add(block);
 		}
 

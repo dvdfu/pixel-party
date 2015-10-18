@@ -21,7 +21,6 @@ public class InputManager : MonoBehaviour {
 
 		List<Block> l = clusterScript.CheckCollision(stageScript.blocks);
 		foreach(Block b in l){
-			Debug.LogError("Collission !");
 			stageScript.blocks.Remove(b);
 			//b.anchor = b.transform.position;
     	}
