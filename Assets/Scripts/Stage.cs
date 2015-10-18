@@ -17,7 +17,7 @@ public class Stage : MonoBehaviour {
 	private float timer = 0;
 	private float rectSize;
 	private GameObject[,] grid;
-	private List<Block> blocks;
+	public List<Block> blocks;
 	private List<Block> deadBlocks;
 
 	private Cluster cluster;
@@ -79,10 +79,7 @@ public class Stage : MonoBehaviour {
 		}
 		deadBlocks.Clear();
 
-		List<Block> l = cluster.CheckCollision(blocks);
-		foreach(Block b in l){
-			blocks.Remove(b);
-		}
+
 	}
 
 	public void SpawnBlock() {
@@ -107,7 +104,7 @@ public class Stage : MonoBehaviour {
 				dir = Block.Direction.Left;
 			}
 		}
-		blocks.Add (AddBlock (x, y, Block.Direction.Down, colors[Random.Range (0, 4)]));
+		blocks.Add (AddBlock (x, y, dir, colors[Random.Range (0, 4)]));
 	}
 
 	public Block AddBlock(int x, int y, Block.Direction dir, Color col){
@@ -135,4 +132,6 @@ public class Stage : MonoBehaviour {
 		y = (y + rectSize / 2) / cellSize;
 		return new Vector2 ((int) x, (int) y);
 	}
+
+
 }

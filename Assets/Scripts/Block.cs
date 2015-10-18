@@ -4,6 +4,7 @@ using System.Collections;
 public class Block : MonoBehaviour {
 	public enum Direction { Up, Down, Left, Right }
 	public Direction direction;
+	public Vector3 anchor;
 	public Cluster clusterScript;
 
 	void Start () {

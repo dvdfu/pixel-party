@@ -47,9 +47,11 @@ public class Cluster : MonoBehaviour {
 				// If collide from top.
 				Vector3 position = b.gameObject.transform.position;
 				
-				if(b.direction == Block.Direction.Down && (Mathf.Abs(position.y - clusterBlock.gameObject.transform.position.y) <= stageScript.cellSize)){
+				if((Mathf.Abs(position.y - clusterBlock.gameObject.transform.position.y) < stageScript.cellSize) &&
+				   (Mathf.Abs(position.x - clusterBlock.gameObject.transform.position.x) < stageScript.cellSize)){
 					Debug.Log("YAAAAAAY");
 					b.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+					b.anchor = b.transform.position;
 					newBlocks.Add(b);
        			 }
         
@@ -60,6 +62,7 @@ public class Cluster : MonoBehaviour {
 
 
 		foreach(Block block in newBlocks){
+			block.anchor = block.transform.position;
 			allBlocks.Add(block);
 		}
 
@@ -67,9 +70,16 @@ public class Cluster : MonoBehaviour {
 
 	}
 
+	public void saveAnchors(){
+		foreach(Block b in allBlocks){
+			b.anchor = b.transform.position;
+		}
+	}
+
+
 	public void MoveBlocks(Vector3 newPosition){
 		foreach(Block b in allBlocks){
-			b.transform.position = newPosition;
+			b.transform.position = b.anchor + newPosition;
 		}
 	}
 
