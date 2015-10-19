@@ -10,7 +10,7 @@ public class Cluster : MonoBehaviour {
 
 	private Stage stage;
 	private int size;
-	private Dictionary<Vector3, int> overlay;
+	private Overlay overlay;
 //
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
@@ -20,15 +20,11 @@ public class Cluster : MonoBehaviour {
 		originY = size / 2;
 		AddTile (originX, originY, 0);
 
-		// Draw Overlay .
-		overlay = new Dictionary<Vector3, int>();
-		for(int i = 2; i < 4; i++){
-			for(int j = 2; j< 4; j++){
-				overlay.Add(new Vector3(i,j,0), 0);
-			}
-		}
+		// Overlay
+		overlay = gameObject.GetComponent<Overlay>();
+		overlay.overlayCoords = overlay.RedSquareOverlay();
+		overlay.DrawOverlay();
 
-		DrawOverlay(overlay);
 	}
 
 	public void AddTile(int x, int y, int color, float alpha = 1.0f, bool isOverlayTile = false) {
@@ -151,11 +147,7 @@ public class Cluster : MonoBehaviour {
 //	public void RemoveBlock(Block b){
 //	}
 
-	public void DrawOverlay(Dictionary<Vector3, int> coordToColor){
-		foreach(KeyValuePair<Vector3, int> entry in coordToColor){
-			AddOverlayTile((int)entry.Key.x, (int)entry.Key.y, entry.Value, 0.2f);
-    	}
-	}
+
 
 
 	
