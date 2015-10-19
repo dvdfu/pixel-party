@@ -41,7 +41,7 @@ public class Stage : MonoBehaviour {
 		}
 		
 		cluster = gameObject.GetComponent<Cluster>();
-		cluster.InitializeBlock(this);
+//		cluster.InitializeBlock(this);
   	}
 
 	void Update () {

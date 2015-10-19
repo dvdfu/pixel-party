@@ -3,69 +3,82 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Cluster : MonoBehaviour {
-	public List<Block> allBlocks;
-	public Block firstBlock;
-	private Stage stageScript;
-
+//	public List<Block> allBlocks;
+//	public Block origin;
+	public GameObject tile;
+	public GameObject[,] tiles;
+	private Stage stage;
+//
 	void Start () {
-		stageScript = gameObject.GetComponent<Stage> ();
+		stage = gameObject.GetComponent<Stage> ();
+		int size = stage.gridSize + 1;
+		tiles = new GameObject[size, size];
+		AddTile (size / 2, size / 2);
 	}
 
-	public void InitializeBlock(Stage script){
-		firstBlock = Instantiate (script.block);
-		firstBlock.transform.parent = gameObject.transform;
-		firstBlock.transform.localPosition = script.CoordToPos(3,3);
-		firstBlock.transform.localScale = new Vector3(script.cellSize, script.cellSize, 1);
-		allBlocks = new List<Block>();
-		allBlocks.Add(firstBlock);
+	public void AddTile(int x, int y) {
+		GameObject newTile = Instantiate (tile);
+		newTile.transform.parent = transform;
+		newTile.transform.localPosition = stage.CoordToPos (x, y);
+		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
+		tiles[x, y] = Instantiate (tile);
 	}
-
-	void End (){
-	}
-
-	void Update (){
-	}
-
-	public void CheckCollisions(List<Block> blocks){
-	}
-
-	public List<Block> CheckCollision(List<Block> blocks){
-		List<Block> newBlocks = new List<Block>();
-		foreach(Block b in blocks){
-			foreach(Block clusterBlock in allBlocks){
-				// If collide from top.
-				Vector3 position = b.gameObject.transform.position;
-				
-				if((Mathf.Abs(position.y - clusterBlock.gameObject.transform.position.y) < stageScript.cellSize) &&
-				   (Mathf.Abs(position.x - clusterBlock.gameObject.transform.position.x) < stageScript.cellSize)){
-					b.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-					//b.anchor = stageScript.PosToCoord (b.transform.position);
-					Vector2 coord = stageScript.PosToCoord(b.transform.localPosition);
-					b.anchor = stageScript.CoordToPos((int)coord.x, (int)coord.y);
-					newBlocks.Add(b);
-       			 }
-			}
-		}
-
-		foreach(Block block in newBlocks){
-			//block.anchor = block.transform.position;
-			allBlocks.Add(block);
-		}
-		return newBlocks;
-	}
-
-	public void SaveAnchors(){
-		foreach(Block b in allBlocks){
-			b.anchor = b.transform.position;
-		}
-	}
-
-	public void MoveBlocks(Vector3 newPosition){
-		foreach(Block b in allBlocks){
-			b.transform.position = b.anchor + newPosition;
-		}
-	}
-
-	public void RemoveBlock(Block b){
-	}
+//
+//	public void InitializeBlock(Stage script){
+//		firstBlock = Instantiate (script.block);
+//		firstBlock.transform.parent = gameObject.transform;
+//		firstBlock.transform.localPosition = script.CoordToPos(3,3);
+//		firstBlock.transform.localScale = new Vector3(script.cellSize, script.cellSize, 1);
+//		allBlocks = new List<Block>();
+//		allBlocks.Add(firstBlock);
+//	}
+//
+//	void End (){
+//	}
+//
+//	void Update (){
+//	}
+//
+//	public void CheckCollisions(List<Block> blocks){
+//	}
+//
+//	public List<Block> CheckCollision(List<Block> blocks){
+//		List<Block> newBlocks = new List<Block>();
+//		foreach(Block b in blocks){
+//			foreach(Block clusterBlock in allBlocks){
+//				// If collide from top.
+//				Vector3 position = b.gameObject.transform.position;
+//				
+//				if((Mathf.Abs(position.y - clusterBlock.gameObject.transform.position.y) < stageScript.cellSize) &&
+//				   (Mathf.Abs(position.x - clusterBlock.gameObject.transform.position.x) < stageScript.cellSize)){
+//					b.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+//					//b.anchor = stageScript.PosToCoord (b.transform.position);
+//					Vector2 coord = stageScript.PosToCoord(b.transform.localPosition);
+//					b.anchor = stageScript.CoordToPos((int)coord.x, (int)coord.y);
+//					newBlocks.Add(b);
+//       			 }
+//			}
+//		}
+//
+//		foreach(Block block in newBlocks){
+//			//block.anchor = block.transform.position;
+//			allBlocks.Add(block);
+//		}
+//		return newBlocks;
+//	}
+//
+//	public void SaveAnchors(){
+//		foreach(Block b in allBlocks){
+//			b.anchor = b.transform.position;
+//		}
+//	}
+//
+//	public void MoveBlocks(Vector3 newPosition){
+//		foreach(Block b in allBlocks){
+//			b.transform.position = b.anchor + newPosition;
+//		}
+//	}
+//
+//	public void RemoveBlock(Block b){
+//	}
 }
