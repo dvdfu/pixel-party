@@ -5,10 +5,9 @@ public class Block : MonoBehaviour {
 	public enum Direction { Up, Down, Left, Right }
 	public Direction direction;
 	public Vector3 anchor;
-	public Cluster clusterScript;
+	public TextMesh coords;
 
 	void Start () {
-		clusterScript = gameObject.transform.parent.GetComponent<Cluster> ();
 	}
 	
 	void Update () {
@@ -38,13 +37,5 @@ public class Block : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		/* combine them.
-		Debug.Log("weeeeeeeeeeeeee");
-		GameObject otherBlock = other.gameObject;
-		//Block currentBlock = gameObject.GetComponent<Block>();
-
-		otherBlock.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-		clusterScript.allBlocks.Add(otherBlock.GetComponent<Block>());
-		*/
 	}
 }

@@ -42,7 +42,7 @@ public class Stage : MonoBehaviour {
 		
 		cluster = gameObject.GetComponent<Cluster>();
 		cluster.InitializeBlock(this);
-  }
+  	}
 
 	void Update () {
 		timer -= Time.deltaTime;
@@ -53,6 +53,7 @@ public class Stage : MonoBehaviour {
 
 		foreach (Block b in blocks) {
 			Vector2 coords = PosToCoord(b.transform.localPosition);
+			b.coords.text = coords.x + " " + coords.y;
 			switch (b.direction) {
 				case Block.Direction.Up:
 				if (coords.y > gridSize) deadBlocks.Add (b);
