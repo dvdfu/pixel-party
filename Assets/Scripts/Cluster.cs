@@ -42,23 +42,6 @@ public class Cluster : MonoBehaviour {
 		tiles[x, y] = newTile;
 	}
 
-	public void AddOverlayTile(int x, int y, int color, float alpha){
-		Tile newTile = Instantiate (tile);
-		// Get rid of shadow.
-		GameObject shadow = newTile.transform.FindChild("Shadow").gameObject;
-		shadow.SetActive(false);
-		
-		newTile.stage = stage;
-		newTile.cellX = x;
-		newTile.cellY = y;
-		newTile.SetColor (color);
-		newTile.SetAlpha(alpha);
-		newTile.transform.parent = transform;
-		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
-		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
-	
-	}
-
 //	public void InitializeBlock(Stage script){
 //		firstBlock = Instantiate (script.block);
 //		firstBlock.transform.parent = gameObject.transform;
