@@ -14,6 +14,16 @@ public class Cluster : MonoBehaviour {
 		int size = stage.gridSize + 1;
 		tiles = new GameObject[size, size];
 		AddTile (size / 2, size / 2);
+
+		// Draw Overlay .
+		Dictionary<Vector3, Color> overlay = new Dictionary<Vector3, Color>();
+		for(int i = 2; i < 4; i++){
+			for(int j = 2; j< 4; j++){
+				overlay.Add(new Vector3(i,j,0), Color.blue);
+			}
+		}
+
+		DrawOverlay(overlay);
 	}
 
 	public void AddTile(int x, int y) {
@@ -21,7 +31,7 @@ public class Cluster : MonoBehaviour {
 		newTile.transform.parent = transform;
 		newTile.transform.localPosition = stage.CoordToPos (x, y);
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
-		tiles[x, y] = Instantiate (tile);
+		tiles[x, y] = newTile;
 	}
 //
 //	public void InitializeBlock(Stage script){
@@ -81,4 +91,13 @@ public class Cluster : MonoBehaviour {
 //
 //	public void RemoveBlock(Block b){
 //	}
+
+	public void DrawOverlay(Dictionary<Vector3, Color> coordToColor){
+		foreach(KeyValuePair<Vector3, Color> entry in coordToColor){
+			AddTile((int)entry.Key.x, (int)entry.Key.y);
+    	}
+	}
+
+
+	
 }
