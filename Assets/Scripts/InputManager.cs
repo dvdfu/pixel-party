@@ -27,7 +27,9 @@ public class InputManager : MonoBehaviour {
 			float cs = stageScript.cellSize;
 			int dragX = (int) (mouseDragged.x / cs);
 			int dragY = (int) (mouseDragged.y / cs);
+			cluster.MoveOverlayTo(clusterX + dragX, clusterY + dragY);
 			cluster.MoveOriginTo(clusterX + dragX, clusterY + dragY);
+
 		}
 	}
 }

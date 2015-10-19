@@ -17,7 +17,7 @@ public class Cluster : MonoBehaviour {
 		stage = gameObject.GetComponent<Stage> ();
 		size = stage.gridSize*2;
 		tiles = new Tile[size, size];
-		originOff = size / 2;
+		originOff = size / 4;
 		origin = AddTile (originOff, originOff, 0);
 		bump = GetComponent<AudioSource> ();
 	
@@ -65,6 +65,24 @@ public class Cluster : MonoBehaviour {
 			}
 		}
 	}
+
+	public void MoveOverlayTo(int x, int y) { // takes GRID coordinates
+		int dx = x - origin.cellX;
+		int dy = y - origin.cellY;
+
+
+		Dictionary<Vector3, int> newOverlay = new Dictionary<Vector3, int>();
+
+		foreach(KeyValuePair<Vector3, int> entry in overlay.overlayCoords){
+			newOverlay.Add(new Vector3(entry.Key.x + dx, entry.Key.y + dy, 0), entry.Value);
+    	}
+
+		// Kill old overlay.
+		overlay.DestroyOverlay();
+
+		overlay.overlayCoords = newOverlay;
+		overlay.DrawOverlay();
+  }
 
 	public void CheckCollisions(List<Block> blocks){
 		for (int i = 0; i < size; i++) {
