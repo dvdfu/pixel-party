@@ -18,6 +18,16 @@ public class Cluster : MonoBehaviour {
 		originX = size / 2;
 		originY = size / 2;
 		AddTile (originX, originY, 0);
+
+		// Draw Overlay .
+		Dictionary<Vector3, Color> overlay = new Dictionary<Vector3, Color>();
+		for(int i = 2; i < 4; i++){
+			for(int j = 2; j< 4; j++){
+				overlay.Add(new Vector3(i,j,0), Color.blue);
+			}
+		}
+
+		DrawOverlay(overlay);
 	}
 
 	public void AddTile(int x, int y, int color) {
@@ -89,4 +99,13 @@ public class Cluster : MonoBehaviour {
 //
 //	public void RemoveBlock(Block b){
 //	}
+
+	public void DrawOverlay(Dictionary<Vector3, Color> coordToColor){
+		foreach(KeyValuePair<Vector3, Color> entry in coordToColor){
+			AddTile((int)entry.Key.x, (int)entry.Key.y, 0);
+    	}
+	}
+
+
+	
 }
