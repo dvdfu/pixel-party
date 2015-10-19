@@ -70,6 +70,8 @@ public class Stage : MonoBehaviour {
 			}
 		}
 
+		cluster.CheckCollisions (blocks);
+
 		foreach (Block b in deadBlocks) {
 			blocks.Remove(b);
 			Destroy(b.gameObject);

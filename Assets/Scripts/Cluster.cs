@@ -3,17 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Cluster : MonoBehaviour {
-//	public List<Block> allBlocks;
-//	public Block origin;
 	public int originX;
 	public int originY;
 	public Tile tile;
 	public Tile[,] tiles;
+
 	private Stage stage;
+	private int size;
 //
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
-		int size = stage.gridSize + 1;
+		size = stage.gridSize;
 		tiles = new Tile[size, size];
 		originX = size / 2;
 		originY = size / 2;
@@ -57,8 +57,21 @@ public class Cluster : MonoBehaviour {
 //	void Update (){
 //	}
 //
-//	public void CheckCollisions(List<Block> blocks){
-//	}
+	public void CheckCollisions(List<Block> blocks){
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				Tile tile = tiles[i, j];
+				if (tile != null) {
+					foreach (Block b in blocks) {
+						Vector2 coord = stage.PosToCoord(b.transform.localPosition);
+						if (i == (int)coord.x && j == (int)coord.y) {
+							Debug.Log (i+" " +j);
+						}
+					}
+				}
+			}
+		}
+	}
 //
 //	public List<Block> CheckCollision(List<Block> blocks){
 //		List<Block> newBlocks = new List<Block>();
