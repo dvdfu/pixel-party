@@ -19,9 +19,7 @@ public class Stage : MonoBehaviour {
 	private GameObject[,] grid;
 	public List<Block> blocks;
 	private List<Block> deadBlocks;
-
 	private Cluster cluster;
-
 
 	void Start () {
 		grid = new GameObject[gridSize + 1, gridSize + 1];
@@ -41,11 +39,9 @@ public class Stage : MonoBehaviour {
 				grid[i,j] = d;
 			}
 		}
-
 		
 		cluster = gameObject.GetComponent<Cluster>();
-		cluster.initializeBlock(this);
-
+		cluster.InitializeBlock(this);
   }
 
 	void Update () {
@@ -78,8 +74,6 @@ public class Stage : MonoBehaviour {
 			Destroy(b.gameObject);
 		}
 		deadBlocks.Clear();
-
-
 	}
 
 	public void SpawnBlock() {
@@ -132,6 +126,4 @@ public class Stage : MonoBehaviour {
 		y = (y + rectSize / 2) / cellSize;
 		return new Vector2 ((int) x, (int) y);
 	}
-
-
 }

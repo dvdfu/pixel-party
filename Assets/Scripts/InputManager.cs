@@ -18,7 +18,6 @@ public class InputManager : MonoBehaviour {
 	}
 	
 	void Update () {
-
 		List<Block> l = clusterScript.CheckCollision(stageScript.blocks);
 		foreach(Block b in l){
 			stageScript.blocks.Remove(b);
@@ -26,7 +25,7 @@ public class InputManager : MonoBehaviour {
     	}
 		if (Input.GetMouseButtonDown (0)) {
 			mousePressed = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			clusterScript.saveAnchors();
+			clusterScript.SaveAnchors();
 			//cluster.anchor = cluster.transform.position;
 		}
 		if (Input.GetMouseButton (0)) {
@@ -37,6 +36,5 @@ public class InputManager : MonoBehaviour {
 			//cluster.transform.position = clusterAnchor + new Vector3(dragX, dragY, 0)*cs;
 			clusterScript.MoveBlocks(new Vector3(dragX, dragY, 0)*cs);
 		}
-
 	}
 }

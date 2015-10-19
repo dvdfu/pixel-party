@@ -3,35 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Cluster : MonoBehaviour {
-
 	public List<Block> allBlocks;
 	public Block firstBlock;
 	private Stage stageScript;
-
 
 	void Start () {
 		stageScript = gameObject.GetComponent<Stage> ();
 	}
 
-	public void initializeBlock(Stage script){
+	public void InitializeBlock(Stage script){
 		firstBlock = Instantiate (script.block);
 		firstBlock.transform.parent = gameObject.transform;
 		firstBlock.transform.localPosition = script.CoordToPos(3,3);
 		firstBlock.transform.localScale = new Vector3(script.cellSize, script.cellSize, 1);
 		allBlocks = new List<Block>();
 		allBlocks.Add(firstBlock);
-
 	}
 
 	void End (){
 	}
 
 	void Update (){
-
 	}
 
-	public void checkCollissions(List<Block> blocks){
-
+	public void CheckCollisions(List<Block> blocks){
 	}
 
 	public List<Block> CheckCollision(List<Block> blocks){
@@ -49,28 +44,21 @@ public class Cluster : MonoBehaviour {
 					b.anchor = stageScript.CoordToPos((int)coord.x, (int)coord.y);
 					newBlocks.Add(b);
        			 }
-        
-       				 // If collide from bottom.
 			}
-		
 		}
-
 
 		foreach(Block block in newBlocks){
 			//block.anchor = block.transform.position;
 			allBlocks.Add(block);
 		}
-
 		return newBlocks;
-
 	}
 
-	public void saveAnchors(){
+	public void SaveAnchors(){
 		foreach(Block b in allBlocks){
 			b.anchor = b.transform.position;
 		}
 	}
-
 
 	public void MoveBlocks(Vector3 newPosition){
 		foreach(Block b in allBlocks){
@@ -78,10 +66,6 @@ public class Cluster : MonoBehaviour {
 		}
 	}
 
-	public void removeBlock(Block b){
-
-	
+	public void RemoveBlock(Block b){
 	}
-		 
-
 }
