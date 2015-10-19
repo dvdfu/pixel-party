@@ -6,10 +6,12 @@ public class Overlay : MonoBehaviour {
 	public Tile tile;
 	public Stage stage;
 	public Dictionary<Vector3, int> overlayCoords;
+	public List<Tile> overlayTiles;
 
 	// Use this for initialization
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
+		overlayTiles = new List<Tile>();
 	}
 	
 	// Update is called once per frame
@@ -31,12 +33,16 @@ public class Overlay : MonoBehaviour {
 		newTile.transform.parent = transform;
 		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
+		overlayTiles.Add(newTile);
 	}
 	
 	public Dictionary<Vector3, int> RedSquareOverlay(){
+		int middleGrid = stage.gridSize/2 + 1;
+		int offset = 2;
+
 		Dictionary<Vector3, int> overlay = new Dictionary<Vector3, int>();
-		for(int i = 0; i < 2; i++){
-			for(int j = 0; j< 2; j++){
+		for(int i = middleGrid - offset; i < middleGrid; i++){
+			for(int j = middleGrid - offset; j< middleGrid; j++){
 				overlay.Add(new Vector3(i,j,0), 0);
 			}
 		}
@@ -47,5 +53,13 @@ public class Overlay : MonoBehaviour {
 		foreach(KeyValuePair<Vector3, int> entry in overlayCoords){
 			AddOverlayTile((int)entry.Key.x, (int)entry.Key.y, entry.Value, 0.2f);
 		}
+	}
+
+	public void DestroyOverlay(){
+		foreach(Tile t in overlayTiles){
+			Destroy(t.gameObject);
+		}
+		
+		overlayTiles.Clear();
 	}
 }
