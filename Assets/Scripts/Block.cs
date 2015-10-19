@@ -8,8 +8,10 @@ public class Block : MonoBehaviour {
 	public TextMesh coords;
 	public int color;
 	public Stage stage;
+	public bool isDead;
 
 	void Start () {
+		isDead = false;
 	}
 	
 	void Update () {

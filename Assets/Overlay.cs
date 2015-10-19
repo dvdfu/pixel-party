@@ -31,20 +31,16 @@ public class Overlay : MonoBehaviour {
 		newTile.transform.parent = transform;
 		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
-		
 	}
 	
 	public Dictionary<Vector3, int> RedSquareOverlay(){
-
 		Dictionary<Vector3, int> overlay = new Dictionary<Vector3, int>();
 		for(int i = 0; i < 2; i++){
 			for(int j = 0; j< 2; j++){
 				overlay.Add(new Vector3(i,j,0), 0);
 			}
 		}
-
 		return overlay;
-
 	}
 
 	public void DrawOverlay(){
