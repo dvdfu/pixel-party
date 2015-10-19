@@ -19,4 +19,11 @@ public class Tile : MonoBehaviour {
 		this.color = color;
 		GetComponent<SpriteRenderer> ().color = stage.colors[color];
 	}
+	
+
+	public void SetAlpha(float alpha){
+		Color color = GetComponent<SpriteRenderer> ().color;
+		color.a = alpha;
+		GetComponent<SpriteRenderer> ().color = color;
+	}
 }

@@ -10,6 +10,7 @@ public class Cluster : MonoBehaviour {
 	public Tile tile;
 	public Tile[,] tiles;
 	private Stage stage;
+	private Dictionary<Vector3, int> overlay;
 //
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
@@ -20,26 +21,44 @@ public class Cluster : MonoBehaviour {
 		AddTile (originX, originY, 0);
 
 		// Draw Overlay .
-		Dictionary<Vector3, Color> overlay = new Dictionary<Vector3, Color>();
+		overlay = new Dictionary<Vector3, int>();
 		for(int i = 2; i < 4; i++){
 			for(int j = 2; j< 4; j++){
-				overlay.Add(new Vector3(i,j,0), Color.blue);
+				overlay.Add(new Vector3(i,j,0), 0);
 			}
 		}
 
 		DrawOverlay(overlay);
 	}
 
-	public void AddTile(int x, int y, int color) {
+	public void AddTile(int x, int y, int color, float alpha = 1.0f, bool isOverlayTile = false) {
 		Tile newTile = Instantiate (tile);
 		newTile.stage = stage;
 		newTile.cellX = x;
 		newTile.cellY = y;
 		newTile.SetColor (color);
+		newTile.SetAlpha(alpha);
 		newTile.transform.parent = transform;
 		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
 		tiles[x, y] = newTile;
+	}
+
+	public void AddOverlayTile(int x, int y, int color, float alpha){
+		Tile newTile = Instantiate (tile);
+		// Get rid of shadow.
+		GameObject shadow = newTile.transform.FindChild("Shadow").gameObject;
+		shadow.SetActive(false);
+		
+		newTile.stage = stage;
+		newTile.cellX = x;
+		newTile.cellY = y;
+		newTile.SetColor (color);
+		newTile.SetAlpha(alpha);
+		newTile.transform.parent = transform;
+		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
+		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
+	
 	}
 
 //	public void InitializeBlock(Stage script){
@@ -100,9 +119,9 @@ public class Cluster : MonoBehaviour {
 //	public void RemoveBlock(Block b){
 //	}
 
-	public void DrawOverlay(Dictionary<Vector3, Color> coordToColor){
-		foreach(KeyValuePair<Vector3, Color> entry in coordToColor){
-			AddTile((int)entry.Key.x, (int)entry.Key.y, 0);
+	public void DrawOverlay(Dictionary<Vector3, int> coordToColor){
+		foreach(KeyValuePair<Vector3, int> entry in coordToColor){
+			AddOverlayTile((int)entry.Key.x, (int)entry.Key.y, entry.Value, 0.2f);
     	}
 	}
 
