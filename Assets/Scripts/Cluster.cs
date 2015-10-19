@@ -6,11 +6,12 @@ public class Cluster : MonoBehaviour {
 	public Tile origin;
 	public Tile tile;
 	public Tile[,] tiles;
+	public Overlay overlay;
+	public AudioSource bump;
 
 	private int originOff;
 	private Stage stage;
 	private int size;
-	public Overlay overlay;
 
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
@@ -18,6 +19,7 @@ public class Cluster : MonoBehaviour {
 		tiles = new Tile[size, size];
 		originOff = size / 4;
 		origin = AddTile (originOff, originOff, 0);
+		bump = GetComponent<AudioSource> ();
 	
 		// Overlay
 		overlay = gameObject.GetComponent<Overlay>();
@@ -45,6 +47,7 @@ public class Cluster : MonoBehaviour {
 		newTile.transform.localPosition = stage.CoordToPos (x, y);
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
 		tiles[clusterX, clusterY] = newTile;
+		bump.Play ();
 		return newTile;
 	}
 
