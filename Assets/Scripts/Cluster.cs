@@ -5,25 +5,33 @@ using System.Collections.Generic;
 public class Cluster : MonoBehaviour {
 //	public List<Block> allBlocks;
 //	public Block origin;
-	public GameObject tile;
-	public GameObject[,] tiles;
+	public int originX;
+	public int originY;
+	public Tile tile;
+	public Tile[,] tiles;
 	private Stage stage;
 //
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
 		int size = stage.gridSize + 1;
-		tiles = new GameObject[size, size];
-		AddTile (size / 2, size / 2);
+		tiles = new Tile[size, size];
+		originX = size / 2;
+		originY = size / 2;
+		AddTile (originX, originY, 0);
 	}
 
-	public void AddTile(int x, int y) {
-		GameObject newTile = Instantiate (tile);
+	public void AddTile(int x, int y, int color) {
+		Tile newTile = Instantiate (tile);
+		newTile.stage = stage;
+		newTile.cellX = x;
+		newTile.cellY = y;
+		newTile.SetColor (color);
 		newTile.transform.parent = transform;
-		newTile.transform.localPosition = stage.CoordToPos (x, y);
+		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
-		tiles[x, y] = Instantiate (tile);
+		tiles[x, y] = newTile;
 	}
-//
+
 //	public void InitializeBlock(Stage script){
 //		firstBlock = Instantiate (script.block);
 //		firstBlock.transform.parent = gameObject.transform;
