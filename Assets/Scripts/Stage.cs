@@ -7,7 +7,6 @@ public class Stage : MonoBehaviour {
 	public GameObject dot;
 	public GameObject dots;
 	public Block block;
-	//public Block cluster;
 	public int gridSize;
 	public float cellSize;
 	public float blockSpeed = 0.5f;
@@ -41,7 +40,6 @@ public class Stage : MonoBehaviour {
 		}
 		
 		cluster = gameObject.GetComponent<Cluster>();
-//		cluster.InitializeBlock(this);
   	}
 
 	void Update () {
