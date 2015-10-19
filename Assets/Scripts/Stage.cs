@@ -45,7 +45,10 @@ public class Stage : MonoBehaviour {
 	void Update () {
 
 		if(score.remaining == 0){
-			Debug.Log(cluster.CheckFinalScore());
+			int finalScore = cluster.CheckFinalScore();
+			int maxScore = cluster.overlay.overlayCoords.Count;
+			score.SetFinalScore(finalScore, maxScore);
+			return;
 		}
 
 

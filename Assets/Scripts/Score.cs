@@ -21,4 +21,8 @@ public class Score : MonoBehaviour {
 			label.text = "" + remaining;
 		}
 	}
+
+	public void SetFinalScore (int score, int max) {
+		label.text = score + " / " + max;
+	}
 }

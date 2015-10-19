@@ -9,7 +9,7 @@ public class Cluster : MonoBehaviour {
 
 	private Stage stage;
 	private int size;
-	private Overlay overlay;
+	public Overlay overlay;
 
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
