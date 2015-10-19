@@ -31,19 +31,21 @@ public class Overlay : MonoBehaviour {
 		newTile.SetColor (color);
 		newTile.SetAlpha(alpha);
 		newTile.transform.parent = transform;
-		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
+		Vector3 newPos = stage.CoordToPos (newTile.cellX, newTile.cellY);
+		newPos.z += 1;
+		newTile.transform.localPosition = newPos;
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
 		overlayTiles.Add(newTile);
 	}
 	
 	public Dictionary<Vector3, int> RedSquareOverlay(){
-		int middleGrid = stage.gridSize/2 + 1;
+		int middleGrid = stage.gridSize/2 ;
 		int offset = 2;
 
 		Dictionary<Vector3, int> overlay = new Dictionary<Vector3, int>();
-		for(int i = middleGrid - offset; i < middleGrid; i++){
-			for(int j = middleGrid - offset; j< middleGrid; j++){
-				overlay.Add(new Vector3(i,j,0), 0);
+		for(int i = middleGrid - offset; i <= middleGrid + offset; i++){
+			for(int j = middleGrid - offset; j<= middleGrid + offset; j++){
+				overlay.Add(new Vector3(i,j,1), 0);
 			}
 		}
 		return overlay;

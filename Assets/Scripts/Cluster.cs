@@ -24,7 +24,7 @@ public class Cluster : MonoBehaviour {
 		// Overlay
 		overlay = gameObject.GetComponent<Overlay>();
 		overlay.overlayCoords = overlay.RedSquareOverlay();
-		overlay.DrawOverlay();
+		//overlay.DrawOverlay();
 	}
 
 	public Tile AddTile(int x, int y, int color, float alpha = 1.0f, bool isOverlayTile = false) { // takes GRID coordinates
