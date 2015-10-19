@@ -7,35 +7,31 @@ public class Cluster : MonoBehaviour {
 	public Tile tile;
 	public Tile[,] tiles;
 
+	private int originOff;
 	private Stage stage;
 	private int size;
 	private Overlay overlay;
 
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
-		size = stage.gridSize;
-		Debug.Log ("size: " + size);
+		size = stage.gridSize*2;
 		tiles = new Tile[size, size];
-
-		origin = AddTile (size/2, size/2, 0);
+		originOff = size / 2;
+		origin = AddTile (originOff, originOff, 0);
 	
 		// Overlay
 		overlay = gameObject.GetComponent<Overlay>();
 		overlay.overlayCoords = overlay.RedSquareOverlay();
 		overlay.DrawOverlay();
-
-
-
 	}
 
 	public Tile AddTile(int x, int y, int color, float alpha = 1.0f, bool isOverlayTile = false) { // takes GRID coordinates
 		int clusterX = x;
 		int clusterY = y;
 		if (origin != null) {
-			clusterX += size/2 - origin.cellX;
-			clusterY += size/2 - origin.cellY;
+			clusterX += originOff - origin.cellX;
+			clusterY += originOff - origin.cellY;
 		}
-		Debug.Log ("Add tile at " + clusterX + " " + clusterY);
 		if (tiles [clusterX, clusterY] != null) {
 			return null;
 		}
@@ -72,48 +68,50 @@ public class Cluster : MonoBehaviour {
 			for (int j = 0; j < size; j++) {
 				Tile tile = tiles[i, j];
 				if (tile != null) {
-					int cellX = i + origin.cellX - size/2;
-					int cellY = j + origin.cellY - size/2;
+					int cellX = i + origin.cellX - originOff;
+					int cellY = j + origin.cellY - originOff;
 					foreach (Block b in blocks) {
 						Vector2 coord = stage.PosToCoord(b.transform.localPosition);
-						if (cellX == (int)coord.x && cellY == (int)coord.y) {
-							AttachBlock(b, cellX, cellY);
+						switch(b.direction) {
+						case Block.Direction.Up:
+							if (cellX == (int)coord.x && cellY-1 == (int)coord.y) {
+								AddTile (cellX, cellY-1, b.color);
+								b.isDead = true;
+							}
+						break;
+						case Block.Direction.Down:
+							if (cellX == (int)coord.x && cellY == (int)coord.y) {
+								AddTile (cellX, cellY+1, b.color);
+								b.isDead = true;
+							}
+						break;
+						case Block.Direction.Left:
+							if (cellX == (int)coord.x && cellY == (int)coord.y) {
+								AddTile (cellX+1, cellY, b.color);
+								b.isDead = true;
+							}
+						break;
+						case Block.Direction.Right:
+							if (cellX-1 == (int)coord.x && cellY == (int)coord.y) {
+								AddTile (cellX-1, cellY, b.color);
+								b.isDead = true;
+							}
+						break;
 						}
 					}
 				}
 			}
 		}
 	}
-
-	private void AttachBlock(Block b, int x, int y) { // takes GRID coordinates
-		Debug.Log ("Attach block at " + x + " " + y);
-		switch (b.direction) {
-		case Block.Direction.Up:
-			AddTile (x, y-1, b.color);
-			break;
-		case Block.Direction.Down:
-			AddTile (x, y+1, b.color);
-			break;
-		case Block.Direction.Left:
-			AddTile (x+1, y, b.color);
-			break;
-		case Block.Direction.Right:
-			AddTile (x-1, y, b.color);
-			break;
-		}
-	}
 	
 	public int CheckFinalScore(){
 		int score = 0;
-
 		for(int i = 0; i < size; i++){
 			for(int j = 0; j < size; j++){
 				Tile t = tiles[i,j];
-
 				if(t == null){
 					continue;
 				}
-
 				Vector3 coord = new Vector3(t.cellX, t.cellY, 0);
 				if(overlay.overlayCoords.ContainsKey(coord)){
 					int color = overlay.overlayCoords[coord];
@@ -121,14 +119,8 @@ public class Cluster : MonoBehaviour {
 						score += 1;
 					}
 				}
-				
 			}
-
-
-		
 		}
-
 		return score;
 	}
-		
 }

@@ -60,22 +60,27 @@ public class Stage : MonoBehaviour {
 			b.coords.text = coords.x + " " + coords.y;
 			switch (b.direction) {
 				case Block.Direction.Up:
-				if (coords.y > gridSize) deadBlocks.Add (b);
+				if (coords.y > gridSize) b.isDead = true;
 				break;
 				case Block.Direction.Down:
-				if (coords.y < -1) deadBlocks.Add (b);
+				if (coords.y < -1) b.isDead = true;
 				break;
 				case Block.Direction.Left:
-				if (coords.x < -1) deadBlocks.Add (b);
+				if (coords.x < -1) b.isDead = true;
 				break;
 				case Block.Direction.Right:
-				if (coords.x > gridSize) deadBlocks.Add (b);
+				if (coords.x > gridSize) b.isDead = true;
 				break;
 			}
 		}
 
 		cluster.CheckCollisions (blocks);
 
+		foreach (Block b in blocks) {
+			if (b.isDead) {
+				deadBlocks.Add(b);
+			}
+		}
 		foreach (Block b in deadBlocks) {
 			blocks.Remove(b);
 			Destroy(b.gameObject);
