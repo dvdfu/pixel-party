@@ -9,7 +9,7 @@ public class Cluster : MonoBehaviour {
 
 	private Stage stage;
 	private int size;
-	private Dictionary<Vector3, int> overlay;
+	private Overlay overlay;
 
 	void Start () {
 		stage = gameObject.GetComponent<Stage> ();
@@ -18,15 +18,11 @@ public class Cluster : MonoBehaviour {
 		tiles = new Tile[size, size];
 		origin = AddTile (size/2, size/2, 0);
 
-		// Draw Overlay .
-		overlay = new Dictionary<Vector3, int>();
-		for(int i = 2; i < 4; i++){
-			for(int j = 2; j< 4; j++){
-				overlay.Add(new Vector3(i,j,0), 0);
-			}
-		}
+		// Overlay
+		overlay = gameObject.GetComponent<Overlay>();
+		overlay.overlayCoords = overlay.RedSquareOverlay();
+		overlay.DrawOverlay();
 
-		DrawOverlay(overlay);
 	}
 
 	public Tile AddTile(int x, int y, int color, float alpha = 1.0f, bool isOverlayTile = false) { // takes GRID coordinates
@@ -51,22 +47,6 @@ public class Cluster : MonoBehaviour {
 		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
 		tiles[clusterX, clusterY] = newTile;
 		return newTile;
-	}
-
-	public void AddOverlayTile(int x, int y, int color, float alpha){
-		Tile newTile = Instantiate (tile);
-		// Get rid of shadow.
-		GameObject shadow = newTile.transform.FindChild("Shadow").gameObject;
-		shadow.SetActive(false);
-		
-		newTile.stage = stage;
-		newTile.cellX = x;
-		newTile.cellY = y;
-		newTile.SetColor (color);
-		newTile.SetAlpha(alpha);
-		newTile.transform.parent = transform;
-		newTile.transform.localPosition = stage.CoordToPos (newTile.cellX, newTile.cellY);
-		newTile.transform.localScale = new Vector3 (stage.cellSize, stage.cellSize, 1);
 	}
 
 	public void MoveOriginTo(int x, int y) { // takes GRID coordinates
@@ -118,11 +98,5 @@ public class Cluster : MonoBehaviour {
 			AddTile (x-1, y, b.color);
 			break;
 		}
-	}
-
-	public void DrawOverlay(Dictionary<Vector3, int> coordToColor){
-		foreach(KeyValuePair<Vector3, int> entry in coordToColor){
-			AddOverlayTile((int)entry.Key.x, (int)entry.Key.y, entry.Value, 0.2f);
-    	}
 	}
 }
