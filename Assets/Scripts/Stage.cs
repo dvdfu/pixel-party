@@ -45,6 +45,12 @@ public class Stage : MonoBehaviour {
   	}
 
 	void Update () {
+
+		if(score.remaining == 0){
+			Debug.Log(cluster.CheckFinalScore());
+		}
+
+
 		timer -= Time.deltaTime;
 		if (timer < 0) {
 			timer += blockSpawnTime;

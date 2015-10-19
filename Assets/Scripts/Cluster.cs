@@ -18,12 +18,14 @@ public class Cluster : MonoBehaviour {
 		tiles = new Tile[size, size];
 		originX = size / 2;
 		originY = size / 2;
-		AddTile (originX, originY, 0);
+		AddTile (0, 0, 0);
 
 		// Overlay
 		overlay = gameObject.GetComponent<Overlay>();
 		overlay.overlayCoords = overlay.RedSquareOverlay();
 		overlay.DrawOverlay();
+
+
 
 	}
 
@@ -130,8 +132,32 @@ public class Cluster : MonoBehaviour {
 //	public void RemoveBlock(Block b){
 //	}
 
+	public int CheckFinalScore(){
+		int score = 0;
+
+		for(int i = 0; i < size; i++){
+			for(int j = 0; j < size; j++){
+				Tile t = tiles[i,j];
+
+				if(t == null){
+					continue;
+				}
+
+				Vector3 coord = new Vector3(t.cellX, t.cellY, 0);
+				if(overlay.overlayCoords.ContainsKey(coord)){
+					int color = overlay.overlayCoords[coord];
+					if(t.color == color){
+						score += 1;
+					}
+				}
+				
+			}
 
 
+		
+		}
 
-	
+		return score;
+	}
+		
 }
