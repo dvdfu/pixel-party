@@ -6,6 +6,8 @@ public class Block : MonoBehaviour {
 	public Direction direction;
 	public Vector3 anchor;
 	public TextMesh coords;
+	public int color;
+	public Stage stage;
 
 	void Start () {
 	}
@@ -13,8 +15,9 @@ public class Block : MonoBehaviour {
 	void Update () {
 	}
 
-	public void SetColor(Color col) {
-		GetComponent<SpriteRenderer> ().color = col;
+	public void SetColor(int col) {
+		color = col;
+		GetComponent<SpriteRenderer> ().color = stage.colors[col];
 	}
 
 	public void SetDirection(Direction dir) {

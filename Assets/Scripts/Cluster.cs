@@ -32,6 +32,8 @@ public class Cluster : MonoBehaviour {
 	}
 
 	public void AddTile(int x, int y, int color, float alpha = 1.0f, bool isOverlayTile = false) {
+		if (tiles [x, y] != null)
+			return;
 		Tile newTile = Instantiate (tile);
 		newTile.stage = stage;
 		newTile.cellX = x;
@@ -84,11 +86,28 @@ public class Cluster : MonoBehaviour {
 					foreach (Block b in blocks) {
 						Vector2 coord = stage.PosToCoord(b.transform.localPosition);
 						if (i == (int)coord.x && j == (int)coord.y) {
-							Debug.Log (i+" " +j);
+							AttachBlock(b, i, j);
 						}
 					}
 				}
 			}
+		}
+	}
+
+	private void AttachBlock(Block b, int x, int y) {
+		switch (b.direction) {
+		case Block.Direction.Up:
+			AddTile (x, y-1, b.color);
+			break;
+		case Block.Direction.Down:
+			AddTile (x, y+1, b.color);
+			break;
+		case Block.Direction.Left:
+			AddTile (x+1, y, b.color);
+			break;
+		case Block.Direction.Right:
+			AddTile (x-1, y, b.color);
+			break;
 		}
 	}
 //

@@ -101,12 +101,13 @@ public class Stage : MonoBehaviour {
 				dir = Block.Direction.Left;
 			}
 		}
-		blocks.Add (AddBlock (x, y, dir, colors[Random.Range (0, 4)]));
+		blocks.Add (AddBlock (x, y, dir, Random.Range (0, 4)));
 	}
 
-	public Block AddBlock(int x, int y, Block.Direction dir, Color col){
+	public Block AddBlock(int x, int y, Block.Direction dir, int col){
 		score.Deduct ();
 		Block newBlock = Instantiate (block);
+		newBlock.stage = this;
 		newBlock.SetDirection(dir);
 		newBlock.SetColor (col);
 		newBlock.transform.parent = transform;
